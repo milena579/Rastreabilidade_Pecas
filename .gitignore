@@ -1,0 +1,28 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.db
+*.sqlite
+*.log
+*.bak
+*.tmp
+
+# Dados sensíveis
+appsettings.json
+appsettings.*.json
+
+# Ferramentas EF
+Migrations/
+
+# Rider
+.idea/
+
+node_modules/
+dist/
+.env
+*.log
+.angular
+package-lock.json
+
