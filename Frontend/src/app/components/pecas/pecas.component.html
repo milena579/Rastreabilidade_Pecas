@@ -1,1 +1,99 @@
-<p>pecas works!</p>
+<div class="telaPecas">
+  <div class="titulo">
+    <h1>Peças</h1>
+  </div>
+
+  <div class="acoes">
+    <div class="barraPesquisa">
+      <input type="text" name="pesquisaPeca" placeholder="Buscar peça..." />
+      <img src="assets/lupa-arredondada.png" alt="lupa-arredondada" class="lupa" />
+    </div>
+    <div class="botaoAdd">
+      <button (click)="abrirFormAdd()">Adicionar Peça</button>
+    </div>
+  </div>
+
+  <div class="tabela">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Código</th>
+          <th scope="col">Status</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td >
+              <a class="" style="cursor: pointer; border-bottom: 1px solid rgb(23, 76, 200);" (click)="abrirFormEdit()">{{ item.codigo }}</a>
+            </td>
+            <td>{{ item.status }}</td>
+            <td class="secaoDelete">
+              <button (click)="deletarItem(item.id)">🗑️</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (modalAdd) {
+    <div class="modal-backdrop">
+      <div class="modal-container">
+        <div class="modal-content">
+          <h2 class="modal-title">Nova Peça</h2>
+          <form>
+            <input
+              type="text"
+              placeholder="Código"
+              [value]="novoCodigo"
+              class="input-field"
+            />
+            <input
+              type="text"
+              placeholder="Status"
+              [value]="novoStatus"
+              class="input-field"
+            />
+            <div class="button-group">
+              <button type="button" (click)="fecharFormAdd()" class="btn-cancel">Cancelar</button>
+              <button type="button" (click)="cadastrar()" class="btn-add">Adicionar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
+
+
+  @if (modalEdit) {
+    <div class="modal-backdrop">
+      <div class="modal-container">
+        <div class="modal-content">
+          <h2 class="modal-title">Editar Peça</h2>
+          <form>
+            <input
+              type="text"
+              placeholder="Código"
+              [value]="novoCodigo"
+              class="input-field"
+            />
+            <input
+              type="text"
+              placeholder="Status"
+              [value]="novoStatus"
+              class="input-field"
+            />
+            <div class="button-group">
+              <button type="button" (click)="fecharFormEdit()" class="btn-cancel">Cancelar</button>
+              <button type="button" (click)="cadastrar()" class="btn-add">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
+</div>

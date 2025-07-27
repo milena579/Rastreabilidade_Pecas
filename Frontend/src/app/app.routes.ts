@@ -1,17 +1,13 @@
-import { Routes } from '@angular/router';
-import { CadastroEstacaoComponent } from './features/estacoes/cadastro-estacao/cadastro-estacao.component';
-import { RegistrarComponent } from './features/movimentacoes/registrar/registrar.component';
-import { HistoricoComponent } from './features/movimentacoes/historico/historico.component';
-import { ListaEstacoesComponent } from './features/estacoes/lista-estacoes/lista-estacoes.component';
-import { CadastroPecaComponent } from './features/pecas/cadastro-peca/cadastro-peca.component';
-import { ListaPecasComponent } from './features/pecas/lista-pecas/lista-pecas.component';
+import { RouterModule, Routes } from '@angular/router';
+import { PecasComponent } from './components/pecas/pecas.component';
+import { EstacoesComponent } from './components/estacoes/estacoes.component';
+import { MovimentacoesComponent } from './components/movimentacoes/movimentacoes.component';
+import { NgModule } from '@angular/core';
+
 
 export const routes: Routes = [
-  { path: 'pecas', component: ListaPecasComponent },
-  { path: 'pecas/novo', component: CadastroPecaComponent },
-  { path: 'estacoes', component: ListaEstacoesComponent },
-  { path: 'estacoes/novo', component: CadastroEstacaoComponent },
-  { path: 'movimentacoes/registrar', component: RegistrarComponent },
-  { path: 'movimentacoes/historico', component: HistoricoComponent },
+  { path: 'pecas', component: PecasComponent },
+  { path: 'estacoes', component: EstacoesComponent },
+  { path: 'movimentacoes', component: MovimentacoesComponent },
   { path: '**', redirectTo: 'pecas' }
 ];
