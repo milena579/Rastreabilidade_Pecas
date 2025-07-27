@@ -59,7 +59,7 @@
     {
       "code": "NU1107",
       "level": "Error",
-      "message": "Conflito de versão detectado para Microsoft.EntityFrameworkCore.Relational. Instale/referencie Microsoft.EntityFrameworkCore.Relational 9.0.7 diretamente no projeto Rastreabilidade.API para resolver esse problema. \r\n Rastreabilidade.API -> Microsoft.EntityFrameworkCore.Design 9.0.7 -> Microsoft.EntityFrameworkCore.Relational (>= 9.0.7) \r\n Rastreabilidade.API -> Pomelo.EntityFrameworkCore.MySql 8.0.3 -> Microsoft.EntityFrameworkCore.Relational (>= 8.0.13 && <= 8.0.999).",
+      "message": "Version conflict detected for Microsoft.EntityFrameworkCore.Relational. Install/reference Microsoft.EntityFrameworkCore.Relational 9.0.7 directly to project Rastreabilidade.API to resolve this issue. \r\n Rastreabilidade.API -> Microsoft.EntityFrameworkCore.Design 9.0.7 -> Microsoft.EntityFrameworkCore.Relational (>= 9.0.7) \r\n Rastreabilidade.API -> Pomelo.EntityFrameworkCore.MySql 8.0.3 -> Microsoft.EntityFrameworkCore.Relational (>= 8.0.13 && <= 8.0.999).",
       "libraryId": "Microsoft.EntityFrameworkCore.Relational",
       "targetGraphs": [
         "net8.0"
