@@ -1,1 +1,23 @@
-<p>movimentacoes works!</p>
+<div class="telaPecas">
+  <div class="titulo">
+    <h1>Movimentações</h1>
+  </div>
+
+  <div class="acoes">
+    <div>
+      <button (click)="mostrarRegistro = true">Registrar Movimentação</button>
+      <button (click)="mostrarRegistro = false">Histórico de Movimentações</button>
+    </div>
+  </div>
+
+  <div>
+    @if(mostrarRegistro) {
+      <app-registros-movimentacoes></app-registros-movimentacoes>
+    } @else {
+      <app-historico-movimentacoes></app-historico-movimentacoes>
+    }
+  </div>
+
+</div>
+
+

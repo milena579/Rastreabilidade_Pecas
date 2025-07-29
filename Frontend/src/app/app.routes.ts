@@ -6,6 +6,8 @@ import { NgModule } from '@angular/core';
 import { FormularioPecaComponent } from './components/formulario-peca/formulario-peca.component';
 import { CadastrarPecaComponent } from './pages/pecas/cadastrar-peca/cadastrar-peca.component';
 import { CadastrarEstacaoComponent } from './pages/estacoes/cadastrar-estacao/cadastrar-estacao.component';
+import { HistoricoMovimentacoesComponent } from './pages/movimentacoes/historico-movimentacoes/historico-movimentacoes.component';
+import { RegistrosMovimentacoesComponent } from './pages/movimentacoes/registros-movimentacoes/registros-movimentacoes.component';
 
 
 export const routes: Routes = [
@@ -14,5 +16,7 @@ export const routes: Routes = [
   { path: 'estacoes', component: EstacoesComponent },
   { path: 'cadastrarEstacao', component: CadastrarEstacaoComponent},
   { path: 'movimentacoes', component: MovimentacoesComponent },
+  { path: 'historicoMovimentacoes', component: HistoricoMovimentacoesComponent },
+  { path: 'registroMovimentacoes', component: RegistrosMovimentacoesComponent },
   { path: '**', redirectTo: 'pecas' }
 ];

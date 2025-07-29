@@ -1,4 +1,4 @@
- body {
+body {
   margin: 0;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -110,18 +110,3 @@ tbody button {
 }
 
 
-/* @media (max-width: 768px) {
-  .acoes {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .barraPesquisa, .botaoAdd {
-    width: 100%;
-    padding: 0;
-  }
-
-  .botaoAdd {
-    justify-content: flex-start;
-  }
-} */
