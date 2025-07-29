@@ -1,7 +1,7 @@
 import { Estacao } from "./estacao.model";
 
 export interface Movimentacao {
-  id: number;
+  id?: number;
   data: string;
   origem?: Estacao;
   destino: Estacao;

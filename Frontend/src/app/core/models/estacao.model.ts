@@ -1,5 +1,5 @@
 export interface Estacao {
-  id: number;
+  id?: number;
   nome: string;
   ordem: number;
 }
