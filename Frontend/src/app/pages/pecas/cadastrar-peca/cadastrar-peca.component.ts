@@ -14,7 +14,6 @@ export class CadastrarPecaComponent {
 
   constructor(private pecaService: PecaService, private router: Router){}
   
-  
   cadastrarPeca(peca : Peca){
     this.pecaService.CadastrarPeca(peca).subscribe(retorno => {
     this.router.navigate(['/peca'])
