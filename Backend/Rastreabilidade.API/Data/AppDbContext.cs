@@ -14,10 +14,18 @@ namespace Rastreabilidade.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Peca>()
-                .HasIndex(p => p.Codigo)
-                .IsUnique();
-            
+
+            modelBuilder.Entity<Estacao>()
+            .HasData(
+                new Estacao { Id = 1, Nome = "Recebimento", Ordem = 1 },
+                new Estacao { Id = 2, Nome = "Montagem", Ordem = 2 },
+                new Estacao { Id = 3, Nome = "Finalizada", Ordem = 3 }
+            );
+
+            modelBuilder.Entity<Estacao>()
+                .HasIndex(e => e.Ordem)
+            .   IsUnique();
+
             modelBuilder.Entity<Movimentacao>()
                 .HasOne(m => m.Peca)
                 .WithMany(p => p.Movimentacoes)
@@ -27,7 +35,7 @@ namespace Rastreabilidade.API.Data
                 .HasOne(m => m.Origem)
                 .WithMany()
                 .HasForeignKey(m => m.OrigemId)
-                .OnDelete(DeleteBehavior.Restrict); // evita delete em cascata
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Movimentacao>()
                 .HasOne(m => m.Destino)

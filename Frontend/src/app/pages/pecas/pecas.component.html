@@ -24,8 +24,8 @@
         </tr>
       </thead>
       <tbody>
-        @if(pecas.length > 0){
-          @for (peca of pecas; track $index) {
+        @if(pecas.length > 0 && pecas){
+          @for (peca of pecas; track peca.id) {
             <tr>
               <td>{{peca.id }}</td>
               <td >

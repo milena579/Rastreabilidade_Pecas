@@ -18,6 +18,7 @@ export class EstacoesComponent {
 
   ngOnInit(): void {
     this.EstacaoService.GetEstacao().subscribe(retorno => {
+      console.log(retorno.dados)
       this.estacoes = retorno.dados;
     });
   }

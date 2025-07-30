@@ -18,7 +18,13 @@ public class PecaController : Controller
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Peca>>> GetPecas()
     {
-        return await banco.Pecas.ToListAsync();
+        if (banco.Pecas == null)
+        {
+            return NotFound();
+        }
+
+        var pecas = await banco.Pecas.ToListAsync();
+        return Ok(new { dados = pecas });
     }
 
     [HttpGet("{id}")]
@@ -35,12 +41,27 @@ public class PecaController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult<Peca>> PostPeca(Peca Peca)
+    public async Task<IActionResult> Post([FromBody] PecaDTO dto)
     {
-        banco.Pecas.Add(Peca);
+        var estacaoInicial = await banco.Estacoes
+            .FirstOrDefaultAsync(e => e.Ordem == 1);
+
+        if (estacaoInicial == null)
+        {
+            return BadRequest("Não foi encontrada uma estação com ordem 1.");
+        }
+
+        var novaPeca = new Peca
+        {
+            Codigo = dto.Codigo,
+            Status = estacaoInicial?.Nome ?? "Recebida",
+            Movimentacoes = new List<Movimentacao>() // ainda pode receber movimentações depois
+        };
+
+        banco.Pecas.Add(novaPeca);
         await banco.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetPecas), new { id = Peca.Id }, Peca);
+        return Ok(novaPeca);
     }
 
     [HttpDelete("{id}")]

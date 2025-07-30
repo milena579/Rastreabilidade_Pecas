@@ -22,6 +22,8 @@ export class PecasComponent implements OnInit{
     this.pecaService.GetPecas().subscribe(retorno => {
       this.pecas = retorno.dados;
       this.pecasGeral = retorno.dados;
+
+      console.log(retorno.dados)
     });
   }
 

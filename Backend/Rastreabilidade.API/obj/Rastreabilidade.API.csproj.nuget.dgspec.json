@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\milec\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj": {}
+    "C:\\Users\\dom2ct\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\milec\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj": {
+    "C:\\Users\\dom2ct\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\milec\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj",
+        "projectUniqueName": "C:\\Users\\dom2ct\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj",
         "projectName": "Rastreabilidade.API",
-        "projectPath": "C:\\Users\\milec\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj",
-        "packagesPath": "C:\\Users\\milec\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\milec\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\obj\\",
+        "projectPath": "C:\\Users\\dom2ct\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\Rastreabilidade.API.csproj",
+        "packagesPath": "C:\\Users\\dom2ct\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dom2ct\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\milec\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\dom2ct\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

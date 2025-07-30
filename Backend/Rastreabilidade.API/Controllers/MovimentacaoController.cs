@@ -11,7 +11,8 @@ public class MovimentacaoController : Controller
 {
     public readonly AppDbContext banco;
 
-    public MovimentacaoController(AppDbContext context) {
+    public MovimentacaoController(AppDbContext context)
+    {
         banco = context;
     }
 
@@ -30,6 +31,16 @@ public class MovimentacaoController : Controller
             return Ok("Nenhuma movimentação encontrada para essa peça");
 
         return Ok(movimentacoes);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacoes()
+    {   if (banco.Movimentacoes == null)
+        {
+            return NotFound();
+        }
+        var movimentacaos = await banco.Movimentacoes.ToListAsync();
+        return Ok(new { dados = movimentacaos });
     }
  
 }
