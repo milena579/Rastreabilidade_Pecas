@@ -1,9 +1,28 @@
-# Ignorar pastas de build
 bin/
 obj/
+.vs/
+*.user
+*.suo
+*.db
+*.sqlite
+*.log
+*.bak
+*.tmp
 
-# Ignorar arquivos de configuração locais
-appsettings.Development.json
+# Dados sensíveis
+appsettings.json
+appsettings.*.json
 
-# Ignorar pastas temporárias do Visual Studio
-.vscode/
+# Ferramentas EF
+Migrations/
+
+# Rider
+.idea/
+
+node_modules/
+dist/
+.env
+*.log
+.angular
+package-lock.json
+
