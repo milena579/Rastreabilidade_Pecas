@@ -16,7 +16,7 @@ public class MovimentacaoController : Controller
         banco = context;
     }
 
-    [HttpGet("peca/{idPeca}")]
+    [HttpGet("{idPeca}")]
     public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacaoPeca(int idPeca)
     {
         var movimentacoes = await banco.Movimentacoes
@@ -32,16 +32,43 @@ public class MovimentacaoController : Controller
 
         return Ok(movimentacoes);
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacoes()
-    {   if (banco.Movimentacoes == null)
+    {
+        if (banco.Movimentacoes == null)
         {
             return NotFound();
         }
         var movimentacaos = await banco.Movimentacoes.ToListAsync();
         return Ok(new { dados = movimentacaos });
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> Registrar(Movimentacao movimentacao) {
+        var peca = await banco.Pecas.FirstOrDefaultAsync(p => p.Id == movimentacao.PecaId);
+        var estacoes = await banco.Estacoes.ToListAsync();
+
+        var origem = estacoes.FirstOrDefault(e => e.Nome.Equals(movimentacao.Origem));
+        var destino = estacoes.FirstOrDefault(e => e.Nome.Equals(movimentacao.Destino));
+
+        if (destino.Ordem != origem.Ordem + 1)
+            return BadRequest("Movimentação inválida: a ordem não está correta.");
+
+
+        if (movimentacao.Destino.Ordem == 3)
+        {
+            peca.Status = "Finalizada";
+        }
+        
+        peca.Status = destino.Nome;
+
+        banco.Movimentacoes.Add(movimentacao);
+        await banco.SaveChangesAsync();
+
+        return Ok(movimentacao);
+    }
+
  
 }
 

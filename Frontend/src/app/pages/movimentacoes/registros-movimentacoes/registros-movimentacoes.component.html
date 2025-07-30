@@ -1,24 +1,30 @@
 <!-- [formGroup]="movimentacaoForm" (ngSubmit)="enviar()" #formDir="ngForm -->
-<form (ngSubmit)="enviar()" #formDir="ngForm">
+<form [formGroup]="movimentacaoForm" (ngSubmit)="enviar()" #formDir="ngForm">
     <div class="secao">
         <label for="">Peça</label>
-        <select name="" id=""></select>
+        <select name="" id="" formControlName = "pecaId">
+            @for(peca of pecas; track peca.id){
+                <option [value]="peca.id">
+                    {{peca.codigo}}
+                </option>
+            }
+        </select>
     </div>
     <div class="secao">
         <label for="">Origem</label>
-        <input type="text" disabled>
+        <input type="text"   formControlName = "origem">
     </div>
     <div class="secao">
         <label for="">Destino:</label>
-        <input type="text" disabled>
+        <input type="text"  formControlName = "destino">
     </div>
     <div class="secao">
         <label for="">Responsavel</label>
-        <input type="text">
+        <input type="text" formControlName = "responsavel">
     </div>
     <div class="secao">
         <label for="">Data Movimentação</label>
-        <input type="date">
+        <input type="date" formControlName = "dataMovimentacao">
     </div>
     <div class="button-group">
         <button type="button" class="btn-cancel"[routerLink]="['/']">Cancelar</button>

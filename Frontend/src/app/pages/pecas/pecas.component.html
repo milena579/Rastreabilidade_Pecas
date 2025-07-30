@@ -5,7 +5,7 @@
 
   <div class="acoes">
     <div class="barraPesquisa">
-      <input type="text" name="pesquisaPeca" placeholder="Buscar peça..." />
+      <input type="text" name="pesquisaPeca" (input)="searchPeca($event)" placeholder="Buscar peça..." />
       <img src="assets/lupa-arredondada.png" alt="lupa-arredondada" class="lupa" (input)="searchPeca($event)"/>
     </div>
     <div class="botaoAdd">
@@ -20,7 +20,6 @@
           <th scope="col">Id</th>
           <th scope="col">Código</th>
           <th scope="col">Status</th>
-          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -32,9 +31,6 @@
                 {{peca.codigo }}
               </td>
               <td>{{peca.status }}</td>
-              <td class="secaoDelete">
-                <button (click)="excluirPeca(peca.id)">🗑️</button>
-              </td>
             </tr>
           }
         } @else {

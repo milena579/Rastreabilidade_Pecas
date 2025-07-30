@@ -19,14 +19,15 @@ export class FormularioPecaComponent implements OnInit{
     this.pecaForm = new FormGroup({
       id: new FormControl(0),
       codigo: new FormControl(''),
-      status: new FormControl({ value: 'Recebimento', disabled: true }) 
+      status: new FormControl({ value: '-', disabled: true }) 
     });
   }
 
   enviar() {
-    const dados : Peca = {
+    const dados = {
       id: this.pecaForm.get('id')?.value,
       codigo: this.pecaForm.get('codigo')?.value,
+      status: '-' // <- adiciona aqui!
     };
 
     this.onSubmit.emit(dados);

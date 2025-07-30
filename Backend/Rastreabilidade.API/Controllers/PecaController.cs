@@ -43,19 +43,12 @@ public class PecaController : Controller
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] PecaDTO dto)
     {
-        var estacaoInicial = await banco.Estacoes
-            .FirstOrDefaultAsync(e => e.Ordem == 1);
-
-        if (estacaoInicial == null)
-        {
-            return BadRequest("Não foi encontrada uma estação com ordem 1.");
-        }
-
+       
         var novaPeca = new Peca
         {
             Codigo = dto.Codigo,
-            Status = estacaoInicial?.Nome ?? "Recebida",
-            Movimentacoes = new List<Movimentacao>() // ainda pode receber movimentações depois
+            Status =  "-",
+            Movimentacoes = new List<Movimentacao>()
         };
 
         banco.Pecas.Add(novaPeca);
