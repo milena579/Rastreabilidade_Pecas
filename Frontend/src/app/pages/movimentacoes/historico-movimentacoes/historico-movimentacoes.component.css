@@ -4,7 +4,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.telaPecas {
+.tela{
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -12,6 +12,7 @@ body {
   margin: auto;
   border-radius: 8px;
 }
+
 .titulo{
     display: flex;
     width: 100%;
@@ -49,32 +50,12 @@ input:focus {
   height: 15px;
 }
 
-.botaoAdd {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 50%;
-  padding-right: 20px;
-}
 
-.botaoAdd button {
-  border-radius: 10px;
-  border: 0;
-  cursor: pointer;
-  padding: 12px 18px;
-  background-color: #4CAF50;
-  color: white;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.botaoAdd button:hover {
-  background-color: #3e8e41;
-}
 
 .tabela {
   width: 100%;
   overflow-x: auto;
+  margin-top: 15px;
 }
 
 table {
@@ -88,8 +69,9 @@ table {
 
 th, td {
   text-align: center;
-  padding: 12px 15px;
+  padding: 10px 15px;
   border-bottom: 1px solid #ddd;
+  width: 20%;
 }
 
 thead th {

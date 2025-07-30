@@ -1,13 +1,11 @@
-<div class="telaPecas">
+<div class="tela">
   <div class="titulo">
     <h1>Movimentações</h1>
   </div>
-
-  <div class="acoes">
-    <div>
-      <button (click)="mostrarRegistro = true">Registrar Movimentação</button>
-      <button (click)="mostrarRegistro = false">Histórico de Movimentações</button>
-    </div>
+  
+  <div class="opcoes">
+    <a (click)="mostrarRegistro = true" [class.selecionado]="mostrarRegistro">Registrar Movimentação</a>
+    <a (click)="mostrarRegistro = false" [class.selecionado]="!mostrarRegistro" >Histórico de Movimentações</a>
   </div>
 
   <div>
@@ -21,3 +19,4 @@
 </div>
 
 
+    

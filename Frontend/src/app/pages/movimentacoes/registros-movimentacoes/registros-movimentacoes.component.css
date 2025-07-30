@@ -1,0 +1,44 @@
+form{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 5px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+.secao{
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+.button-group{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    padding: 20px;
+    justify-content: space-around;
+    gap: 30px;
+}
+
+.btn-cancel, .btn-add{
+    padding: 10px;
+    border:none ;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.btn-add{
+    background-color: rgb(77, 157, 77);
+    color: white;
+}
+
+.btn-cancel{
+    background-color: rgb(162, 49, 49);
+    color: white;
+}
+
+input, select{
+    padding: 8px;
+}
