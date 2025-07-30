@@ -2676,13 +2676,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.412/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\milec\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'expectedPackageFiles', line 53, position 0."
-    }
-  ]
+  }
 }

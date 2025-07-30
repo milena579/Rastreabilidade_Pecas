@@ -14,6 +14,12 @@ namespace Rastreabilidade.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Estacao>().HasData(
+                new Estacao { Id = 1, Nome = "Estação A", Ordem = 1 },
+                new Estacao { Id = 2, Nome = "Estação B", Ordem = 2 },
+                new Estacao { Id = 3, Nome = "Estação C", Ordem = 3 }
+            );
+
             modelBuilder.Entity<Peca>()
                 .HasIndex(p => p.Codigo)
                 .IsUnique();

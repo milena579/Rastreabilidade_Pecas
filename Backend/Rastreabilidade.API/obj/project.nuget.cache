@@ -50,12 +50,5 @@
     "C:\\Users\\milec\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "C:\\Users\\milec\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\milec\\Desktop\\Rastreabilidade_Pecas\\Backend\\Rastreabilidade.API\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'expectedPackageFiles', line 53, position 0."
-    }
-  ]
+  "logs": []
 }

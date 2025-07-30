@@ -4,19 +4,21 @@
           <h2 class="modal-title">Nova Peça</h2>
           <form [formGroup]="pecaForm" (ngSubmit)="enviar()" #formDir="ngForm">
             <div>
-              <label for="">Código</label>
+              <label for="codigo">Código</label>
               <input
                 type="text"
                 class="input-field"
                 formControlName = "codigo"
+                id="codigo"
               />
             </div>
             <div>
-              <label for="">Status</label>
+              <label for="status">Status</label>
               <input
                 type="text"
                 class="input-field"
                 formControlName = "status"
+                id="status"
               />
             </div>
             <div class="button-group">

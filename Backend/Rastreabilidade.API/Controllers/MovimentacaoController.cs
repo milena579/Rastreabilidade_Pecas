@@ -11,7 +11,8 @@ public class MovimentacaoController : Controller
 {
     public readonly AppDbContext banco;
 
-    public MovimentacaoController(AppDbContext context) {
+    public MovimentacaoController(AppDbContext context)
+    {
         banco = context;
     }
 
@@ -31,6 +32,56 @@ public class MovimentacaoController : Controller
 
         return Ok(movimentacoes);
     }
+
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacao()
+    {
+        return await banco.Movimentacoes.ToListAsync();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Movimentacao>> MoverPeca(Movimentacao novaMov)
+    {
+        var peca = await banco.Pecas
+            .Include(p => p.Movimentacoes)
+            .ThenInclude(m => m.Destino)
+            .FirstOrDefaultAsync(p => p.Id == novaMov.PecaId);
+
+        if (peca == null)
+            return NotFound("Peça não encontrada");
+
+        var ultimaMov = peca.Movimentacoes
+            .OrderByDescending(m => m.Data)
+            .FirstOrDefault();
+
+        // Se for a primeira movimentação
+        if (ultimaMov == null)
+        {
+            var estacaoInicial = await banco.Estacoes.OrderBy(e => e.Ordem).FirstOrDefaultAsync();
+            if (novaMov.OrigemId != estacaoInicial!.Id)
+                return BadRequest("A primeira movimentação deve começar pela primeira estação.");
+        }
+        else
+        {
+            // Garante que a movimentação segue a ordem correta
+            if (novaMov.OrigemId != ultimaMov.DestinoId)
+                return BadRequest("A origem da nova movimentação deve ser igual ao destino da última movimentação.");
+
+            var estacaoOrigem = await banco.Estacoes.FindAsync(novaMov.OrigemId);
+            var estacaoDestino = await banco.Estacoes.FindAsync(novaMov.DestinoId);
+
+            if (estacaoDestino!.Ordem <= estacaoOrigem!.Ordem)
+                return BadRequest("Não é permitido voltar para uma estação anterior.");
+        }
+
+        novaMov.Data = DateTime.Now;
+        banco.Movimentacoes.Add(novaMov);
+        await banco.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(MoverPeca), new { id = novaMov.Id }, novaMov);
+    }
+
  
 }
 

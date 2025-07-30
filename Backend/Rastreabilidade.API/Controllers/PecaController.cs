@@ -16,10 +16,12 @@ public class PecaController : Controller
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Peca>>> GetPecas()
+    public async Task<ActionResult> GetPecas()
     {
-        return await banco.Pecas.ToListAsync();
+        var lista = await banco.Pecas.ToListAsync();
+        return Ok(new { dados = lista });
     }
+
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Peca>> GetPeca(int id)

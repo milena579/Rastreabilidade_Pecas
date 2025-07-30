@@ -5,8 +5,8 @@
 
   <div class="acoes">
     <div class="barraPesquisa">
-      <input type="text" name="pesquisaPeca" placeholder="Buscar peça..." />
-      <img src="assets/lupa-arredondada.png" alt="lupa-arredondada" class="lupa" (input)="searchPeca($event)"/>
+     <input type="text" name="pesquisaPeca" placeholder="Buscar peça..." (input)="searchPeca($event)" />
+     <img src="assets/lupa-arredondada.png" alt="lupa-arredondada" class="lupa"/>
     </div>
     <div class="botaoAdd">
       <button [routerLink]="['/cadastrarPeca']"> Adicionar Peça</button>
@@ -24,8 +24,8 @@
         </tr>
       </thead>
       <tbody>
-        @if(pecas.length > 0){
-          @for (peca of pecas; track $index) {
+        @if(pecas && pecas.length > 0){
+          @for (peca of pecas; track peca.id) {
             <tr>
               <td>{{peca.id }}</td>
               <td >

@@ -4,19 +4,21 @@
           <h2 class="modal-title">Nova Estação</h2>
           <form [formGroup]="estacaoForm" (ngSubmit)="enviar()" #formDir="ngForm">
             <div>
-              <label for="">Nome</label>
+              <label for="nome">Nome</label>
               <input
                 type="text"
                 class="input-field"
                 formControlName = "nome"
+                id="nome"
               />
             </div>
             <div>
-              <label for="">Ordem</label>
+              <label for="ordem">Ordem</label>
               <input
                 type="text"
                 class="input-field"
                 formControlName = "ordem"
+                id="ordem"
               />
             </div>
             <div class="button-group">
