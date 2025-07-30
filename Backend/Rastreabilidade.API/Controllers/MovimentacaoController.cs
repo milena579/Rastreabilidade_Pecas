@@ -13,8 +13,6 @@ public class MovimentacaoController : Controller
 
     public MovimentacaoController(AppDbContext context)
     {
-    public MovimentacaoController(AppDbContext context)
-    {
         banco = context;
     }
 
@@ -70,7 +68,4 @@ public class MovimentacaoController : Controller
 
         return Ok(movimentacao);
     }
-
- 
 }
-
