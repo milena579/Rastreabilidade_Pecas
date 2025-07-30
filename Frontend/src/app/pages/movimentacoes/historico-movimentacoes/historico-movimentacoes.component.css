@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.tela{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+  margin: auto;
+  border-radius: 8px;
+}
+
+.titulo{
+    display: flex;
+    width: 100%;
+    justify-items: flex-end;
+    font-weight: bold;
+}
+
+.acoes {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.barraPesquisa {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid rgb(143, 143, 143);
+}
+
+input:focus {
+  outline: none;      
+}
+
+.lupa {
+  width: 15px;
+  height: 15px;
+}
+
+
+
+.tabela {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  text-align: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  width: 20%;
+}
+
+thead th {
+  color: black;
+  font-weight:bold;
+  border-bottom:solid 1px #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+tbody button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+

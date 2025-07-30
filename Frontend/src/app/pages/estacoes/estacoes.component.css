@@ -1,0 +1,188 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.telaEstacao {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+  margin: auto;
+  border-radius: 8px;
+}
+.titulo{
+    display: flex;
+    width: 100%;
+    justify-items: flex-end;
+    font-weight: bold;
+}
+
+.acoes {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.barraPesquisa {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid rgb(143, 143, 143);
+}
+
+input:focus {
+  outline: none;      
+}
+
+.lupa {
+  width: 15px;
+  height: 15px;
+}
+
+.botaoAdd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+  padding-right: 20px;
+}
+
+.botaoAdd button {
+  border-radius: 10px;
+  border: 0;
+  cursor: pointer;
+  padding: 12px 18px;
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.botaoAdd button:hover {
+  background-color: #3e8e41;
+}
+
+.tabela {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  text-align: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+thead th {
+  color: black;
+  font-weight:bold;
+  border-bottom:solid 1px #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+tbody button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* modal */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0; 
+  backdrop-filter: blur(5px); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  color: white;
+  width: 100%;
+}
+
+.modal-container{
+  background-color: #ffffff;
+  padding: 20px;
+  height: 50%;
+  align-items: center;
+  display: flex;
+  width: 25%;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content{
+  width: 100%;
+  height: 100%;
+  gap: 15px;
+  color: black;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 80%;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.button-group{
+  display: flex;
+  width: 100%;
+  justify-content: space-between  ;
+}
+
+.btn-cancel, .btn-add {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+}
+.btn-add{
+  background-color: #4CAF50;
+}
+.btn-cancel{
+  background-color: rgb(194, 61, 61);
+}
+
+
+/* @media (max-width: 768px) {
+  .acoes {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .barraPesquisa, .botaoAdd {
+    width: 100%;
+    padding: 0;
+  }
+
+  .botaoAdd {
+    justify-content: flex-start;
+  }
+} */

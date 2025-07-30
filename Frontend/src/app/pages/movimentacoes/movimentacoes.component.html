@@ -1,0 +1,22 @@
+<div class="tela">
+  <div class="titulo">
+    <h1>Movimentações</h1>
+  </div>
+  
+  <div class="opcoes">
+    <a (click)="mostrarRegistro = true" [class.selecionado]="mostrarRegistro">Registrar Movimentação</a>
+    <a (click)="mostrarRegistro = false" [class.selecionado]="!mostrarRegistro" >Histórico de Movimentações</a>
+  </div>
+
+  <div>
+    @if(mostrarRegistro) {
+      <app-registros-movimentacoes></app-registros-movimentacoes>
+    } @else {
+      <app-historico-movimentacoes></app-historico-movimentacoes>
+    }
+  </div>
+
+</div>
+
+
+    

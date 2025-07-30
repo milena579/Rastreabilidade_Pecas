@@ -1,0 +1,27 @@
+<!-- [formGroup]="movimentacaoForm" (ngSubmit)="enviar()" #formDir="ngForm -->
+<form (ngSubmit)="enviar()" #formDir="ngForm">
+    <div class="secao">
+        <label for="">Peça</label>
+        <select name="" id=""></select>
+    </div>
+    <div class="secao">
+        <label for="">Origem</label>
+        <input type="text">
+    </div>
+    <div class="secao">
+        <label for="">Destino:</label>
+        <input type="text">
+    </div>
+    <div class="secao">
+        <label for="">Responsavel</label>
+        <input type="text">
+    </div>
+    <div class="secao">
+        <label for="">Data Movimentação</label>
+        <input type="date">
+    </div>
+    <div class="button-group">
+        <button type="button" class="btn-cancel"[routerLink]="['/']">Cancelar</button>
+        <button type="submit" class="btn-add">Adicionar</button>
+    </div>
+</form>
