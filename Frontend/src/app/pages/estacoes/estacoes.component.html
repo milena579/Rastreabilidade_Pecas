@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (estacao of estacoes;  track $index) {
+        @for (estacao of estacoes;  track estacao.id) {
           <tr>
             <td>{{ estacao.id }}</td>
             <td >

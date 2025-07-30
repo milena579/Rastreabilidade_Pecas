@@ -18,8 +18,13 @@ public class PecaController : Controller
     [HttpGet]
     public async Task<ActionResult> GetPecas()
     {
-        var lista = await banco.Pecas.ToListAsync();
-        return Ok(new { dados = lista });
+        if (banco.Pecas == null)
+        {
+            return NotFound();
+        }
+
+        var pecas = await banco.Pecas.ToListAsync();
+        return Ok(new { dados = pecas });
     }
 
 
@@ -37,12 +42,20 @@ public class PecaController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult<Peca>> PostPeca(Peca Peca)
+    public async Task<IActionResult> Post([FromBody] PecaDTO dto)
     {
-        banco.Pecas.Add(Peca);
+       
+        var novaPeca = new Peca
+        {
+            Codigo = dto.Codigo,
+            Status =  "-",
+            Movimentacoes = new List<Movimentacao>()
+        };
+
+        banco.Pecas.Add(novaPeca);
         await banco.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetPecas), new { id = Peca.Id }, Peca);
+        return Ok(novaPeca);
     }
 
     [HttpDelete("{id}")]

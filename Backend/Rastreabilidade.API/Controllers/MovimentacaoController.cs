@@ -13,10 +13,12 @@ public class MovimentacaoController : Controller
 
     public MovimentacaoController(AppDbContext context)
     {
+    public MovimentacaoController(AppDbContext context)
+    {
         banco = context;
     }
 
-    [HttpGet("peca/{idPeca}")]
+    [HttpGet("{idPeca}")]
     public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacaoPeca(int idPeca)
     {
         var movimentacoes = await banco.Movimentacoes
@@ -33,53 +35,40 @@ public class MovimentacaoController : Controller
         return Ok(movimentacoes);
     }
 
-
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacao()
+    public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacoes()
     {
-        return await banco.Movimentacoes.ToListAsync();
+        if (banco.Movimentacoes == null)
+        {
+            return NotFound();
+        }
+        var movimentacaos = await banco.Movimentacoes.ToListAsync();
+        return Ok(new { dados = movimentacaos });
     }
-
+    
     [HttpPost]
-    public async Task<ActionResult<Movimentacao>> MoverPeca(Movimentacao novaMov)
-    {
-        var peca = await banco.Pecas
-            .Include(p => p.Movimentacoes)
-            .ThenInclude(m => m.Destino)
-            .FirstOrDefaultAsync(p => p.Id == novaMov.PecaId);
+    public async Task<IActionResult> Registrar(Movimentacao movimentacao) {
+        var peca = await banco.Pecas.FirstOrDefaultAsync(p => p.Id == movimentacao.PecaId);
+        var estacoes = await banco.Estacoes.ToListAsync();
 
-        if (peca == null)
-            return NotFound("Peça não encontrada");
+        var origem = estacoes.FirstOrDefault(e => e.Nome.Equals(movimentacao.Origem));
+        var destino = estacoes.FirstOrDefault(e => e.Nome.Equals(movimentacao.Destino));
 
-        var ultimaMov = peca.Movimentacoes
-            .OrderByDescending(m => m.Data)
-            .FirstOrDefault();
+        if (destino.Ordem != origem.Ordem + 1)
+            return BadRequest("Movimentação inválida: a ordem não está correta.");
 
-        // Se for a primeira movimentação
-        if (ultimaMov == null)
+
+        if (movimentacao.Destino.Ordem == 3)
         {
-            var estacaoInicial = await banco.Estacoes.OrderBy(e => e.Ordem).FirstOrDefaultAsync();
-            if (novaMov.OrigemId != estacaoInicial!.Id)
-                return BadRequest("A primeira movimentação deve começar pela primeira estação.");
+            peca.Status = "Finalizada";
         }
-        else
-        {
-            // Garante que a movimentação segue a ordem correta
-            if (novaMov.OrigemId != ultimaMov.DestinoId)
-                return BadRequest("A origem da nova movimentação deve ser igual ao destino da última movimentação.");
+        
+        peca.Status = destino.Nome;
 
-            var estacaoOrigem = await banco.Estacoes.FindAsync(novaMov.OrigemId);
-            var estacaoDestino = await banco.Estacoes.FindAsync(novaMov.DestinoId);
-
-            if (estacaoDestino!.Ordem <= estacaoOrigem!.Ordem)
-                return BadRequest("Não é permitido voltar para uma estação anterior.");
-        }
-
-        novaMov.Data = DateTime.Now;
-        banco.Movimentacoes.Add(novaMov);
+        banco.Movimentacoes.Add(movimentacao);
         await banco.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(MoverPeca), new { id = novaMov.Id }, novaMov);
+        return Ok(movimentacao);
     }
 
  

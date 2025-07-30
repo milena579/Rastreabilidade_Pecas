@@ -26,6 +26,7 @@ export class MovimentacoesComponent implements OnInit{
 
   ngOnInit(): void {
     this.moviService.GetMovimentacoes().subscribe(retorno => {
+      console.log(retorno.dados)
       this.movimentacoes = retorno.dados;
       this.movimentacoesGeral = retorno.dados;
     })

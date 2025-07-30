@@ -18,8 +18,12 @@ public class EstacaoController : Controller
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Estacao>>> GetEstacoes()
-    {
-        return await banco.Estacoes.ToListAsync();
+    {   if (banco.Estacoes == null)
+        {
+            return NotFound();
+        }
+        var estacoes = await banco.Estacoes.ToListAsync();
+        return Ok(new { dados = estacoes });
     }
 
     [HttpGet("{id}")]
@@ -60,7 +64,7 @@ public class EstacaoController : Controller
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Estacao>> PutEstacao(int id, Estacao estacao){
+    public async Task<IActionResult> PutEstacao(int id, Estacao estacao){
 
         if (id != estacao.Id){
             return BadRequest("O ID da URL não bate com o ID do objeto.");
@@ -84,6 +88,6 @@ public class EstacaoController : Controller
             }
         }
 
-        return Ok(estacao);
+        return Ok(await banco.Estacoes.ToListAsync());
     }
 }

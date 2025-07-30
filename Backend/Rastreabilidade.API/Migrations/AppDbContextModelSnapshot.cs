@@ -39,7 +39,27 @@ namespace Rastreabilidade.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estacoes");
+                    b.ToTable("Estacoes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Recebimento",
+                            Ordem = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "Montagem",
+                            Ordem = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nome = "Finalazada",
+                            Ordem = 3
+                        });
                 });
 
             modelBuilder.Entity("Movimentacao", b =>
@@ -74,7 +94,7 @@ namespace Rastreabilidade.API.Migrations
 
                     b.HasIndex("PecaId");
 
-                    b.ToTable("Movimentacoes");
+                    b.ToTable("Movimentacoes", (string)null);
                 });
 
             modelBuilder.Entity("Peca", b =>
@@ -98,7 +118,7 @@ namespace Rastreabilidade.API.Migrations
                     b.HasIndex("Codigo")
                         .IsUnique();
 
-                    b.ToTable("Pecas");
+                    b.ToTable("Pecas", (string)null);
                 });
 
             modelBuilder.Entity("Movimentacao", b =>
