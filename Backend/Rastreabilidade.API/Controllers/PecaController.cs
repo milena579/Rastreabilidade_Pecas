@@ -28,21 +28,23 @@ public class PecaController : Controller
     }
 
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Peca>> GetPeca(int id)
+   [HttpGet("{id}")]
+    public ActionResult<PecaDto> GetPeca(int id)
     {
-        var Peca = await banco.Pecas.FindAsync(id);
+        var peca = banco.Pecas
+            .Include(p => p.Movimentacoes)
+            .FirstOrDefault(p => p.Id == id);
 
-        if (Peca == null)
-        {
-            return NotFound();
-        }
+        if (peca == null) return NotFound();
 
-        return Peca;
+        var dto = new PecaDto(peca.Id, peca.Codigo, peca.Status);
+
+        return Ok(dto);
     }
 
+
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] PecaDTO dto)
+    public async Task<IActionResult> Post([FromBody] PecaDto dto)
     {
        
         var novaPeca = new Peca

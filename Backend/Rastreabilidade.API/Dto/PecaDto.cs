@@ -1,5 +1,5 @@
-public class PecaDTO
-{   
-    public int Id { get; set; }
-    public string Codigo { get; set; }
-}
+public record PecaDto(
+    int Id,
+    string  Codigo,
+    string Status
+);

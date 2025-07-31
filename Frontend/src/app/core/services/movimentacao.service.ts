@@ -23,7 +23,7 @@ export class MovimentacaoService {
     return this.http.get<{ dados: Movimentacao[] }>(`${this.ApiUrl}/${pecaId}`);
   }
   
-  InserirMovimentacao(movimentacao : MovimentacaoDto) : Observable<Response<Movimentacao[]>>{
-    return this.http.post<Response<Movimentacao[]>>(this.ApiUrl, movimentacao)
+  InserirMovimentacao(movimentacao : MovimentacaoDto) : Observable<Response<MovimentacaoDto[]>>{
+    return this.http.post<Response<MovimentacaoDto[]>>(this.ApiUrl, movimentacao)
   }
 }

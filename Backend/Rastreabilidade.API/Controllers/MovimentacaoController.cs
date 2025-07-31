@@ -17,22 +17,27 @@ public class MovimentacaoController : Controller
     }
 
     [HttpGet("{idPeca}")]
-    public async Task<ActionResult<IEnumerable<Movimentacao>>> GetMovimentacaoPeca(int idPeca)
+    public async Task<ActionResult<IEnumerable<MovimentacaoDto>>> GetMovimentacaoPeca(int idPeca)
     {
-        var movimentacoes = await banco.Movimentacoes
-            .Include(m => m.Origem)
-            .Include(m => m.Destino)
-            .Include(m => m.Peca)
-            .Where(m => m.PecaId == idPeca)
-            .OrderBy(m => m.Data)
-            .ToListAsync();
+        try
+        {
+            var movimentacoes = await banco.Movimentacoes
+                .Include(m => m.Origem)
+                .Include(m => m.Destino)
+                .Include(m => m.Peca)
+                .Where(m => m.PecaId == idPeca)
+                .OrderBy(m => m.Data)
+                .ToListAsync();
 
-        if (!movimentacoes.Any())
-            return Ok(new { dados = new List<Movimentacao>() });
+            var dtoList = movimentacoes.Select(m => m.ToDto()).ToList();
 
-
-        return Ok(new { dados = movimentacoes });
-
+            return Ok(new { dados = dtoList });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao buscar movimentações da peça {idPeca}: {ex.Message}");
+            return StatusCode(500, "Erro interno ao buscar movimentações.");
+        }
     }
 
     [HttpGet]
@@ -48,7 +53,7 @@ public class MovimentacaoController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] MovimentacaoDto dto)
+    public async Task<IActionResult> Post([FromBody] MovimentacaoCreateDto dto)
     {
         var peca = await banco.Pecas.FirstOrDefaultAsync(p => p.Id == dto.PecaId);
         if (peca == null)
@@ -95,7 +100,7 @@ public class MovimentacaoController : Controller
         banco.Movimentacoes.Add(novaMovimentacao);
         await banco.SaveChangesAsync();
 
-        return Ok(novaMovimentacao);
+        return Ok(novaMovimentacao.ToDto());
     }
 
 }

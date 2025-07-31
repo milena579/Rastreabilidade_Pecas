@@ -7,6 +7,7 @@ import { Estacao } from '../../../core/models/estacao.model';
 import { Movimentacao } from '../../../core/models/movimentacao.model';
 import { FormControl, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-registros-movimentacoes',
@@ -38,18 +39,17 @@ export class RegistrosMovimentacoesComponent implements OnInit {
       )
     });
 
-    this.movimentacaoForm.get('pecaId')!.valueChanges
-      .subscribe(pecaId => this.atualizaEstacoes(pecaId));
-
     this.estacaoService.GetEstacao().subscribe(lista => {
       this.estacoes = lista.dados;
       console.log(lista.dados + "estacoes")
-
+      
       this.pecaService.GetPecas().subscribe(ret => {
         this.pecas = ret.dados;
         console.log(ret.dados + "peças")
       });
-
+      
+      this.movimentacaoForm.get('pecaId')!.valueChanges
+        .subscribe(pecaId => this.atualizaEstacoes(pecaId));
     });
   }
 
@@ -60,7 +60,7 @@ export class RegistrosMovimentacoesComponent implements OnInit {
   private atualizaEstacoes(pecaId: number) {
     console.log(pecaId)
 
-    if (!pecaId) {
+    if (!pecaId || this.estacoes.length === 0) {
       this.movimentacaoForm.patchValue({ origem: '', destino: '' });
       return;
     }
@@ -86,7 +86,7 @@ export class RegistrosMovimentacoesComponent implements OnInit {
             new Date(b.data).getTime() - new Date(a.data).getTime()
           )[0];
 
-        origemName = ultima.destino.nome;
+        origemName = ultima.destino.nome ?? '';
         const proxima = this.estacoes
           .find(e => e.ordem === ultima.destino.ordem + 1);
 
@@ -104,32 +104,39 @@ export class RegistrosMovimentacoesComponent implements OnInit {
   }
 
   enviar() {
-  if (this.movimentacaoForm.invalid) return;
+    if (this.movimentacaoForm.invalid) return;
 
-  const pecaId = this.movimentacaoForm.get('pecaId')!.value;
-  const responsavel = this.movimentacaoForm.get('responsavel')!.value;
-  const data = this.movimentacaoForm.get('dataMovimentacao')!.value;
+    const pecaId = this.movimentacaoForm.get('pecaId')!.value;
+    const responsavel = this.movimentacaoForm.get('responsavel')!.value;
+    const data = this.movimentacaoForm.get('dataMovimentacao')!.value;
 
-  const origem = this.estacoes.find(
-    e => e.nome === this.movimentacaoForm.get('origem')!.value
-  );
+    const origem = this.estacoes.find(
+      e => e.nome === this.movimentacaoForm.get('origem')!.getRawValue()
+    );
 
-  const destino = this.estacoes.find(
-    e => e.nome === this.movimentacaoForm.get('destino')!.value
-  );
+    const destino = this.estacoes.find(
+      e => e.nome === this.movimentacaoForm.get('destino')!.getRawValue()
+    );
 
-  const dto = {
-    pecaId,
-    origemId: origem?.id ?? null,
-    destinoId: destino?.id ?? 0,
-    responsavel,
-    data,
-    origem: origem?.nome,
-    destino: destino?.nome
-  };
+    const dto = {
+      pecaId,
+      origemId: origem?.id ?? null,
+      destinoId: destino?.id ?? 0,
+      responsavel,
+      data
+    };
 
-   this.movimentacaoService.InserirMovimentacao(dto).subscribe(() => {
-    this.movimentacaoForm.get('responsavel')!.reset();
-  });
+    console.log(this.movimentacaoForm.value)
+
+    this.movimentacaoService.InserirMovimentacao(dto).subscribe({
+      next: () => {
+        console.log('Movimentação enviada com sucesso!');
+        this.movimentacaoForm.get('responsavel')!.reset();
+      },
+      error: err => {
+        console.error('Erro ao enviar movimentação:', err);
+      }
+    });
+
   }
 }
