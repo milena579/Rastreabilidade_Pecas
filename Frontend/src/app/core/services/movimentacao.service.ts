@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Movimentacao } from '../models/movimentacao.model';
 import { Response } from '../models/response';
+import { MovimentacaoDto } from '../models/movimentacaoDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,11 @@ export class MovimentacaoService {
     return this.http.get<Response<Movimentacao[]>>(this.ApiUrl)
   }
 
-  InserirMovimentacao(movimentacao : Movimentacao) : Observable<Response<Movimentacao[]>>{
+  GetMovimentacoesByPecaId(pecaId: number): Observable<{ dados: Movimentacao[] }> {
+    return this.http.get<{ dados: Movimentacao[] }>(`${this.ApiUrl}/${pecaId}`);
+  }
+  
+  InserirMovimentacao(movimentacao : MovimentacaoDto) : Observable<Response<Movimentacao[]>>{
     return this.http.post<Response<Movimentacao[]>>(this.ApiUrl, movimentacao)
   }
 }

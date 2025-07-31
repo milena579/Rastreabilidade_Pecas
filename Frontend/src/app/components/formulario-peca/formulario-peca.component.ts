@@ -27,7 +27,7 @@ export class FormularioPecaComponent implements OnInit{
     const dados = {
       id: this.pecaForm.get('id')?.value,
       codigo: this.pecaForm.get('codigo')?.value,
-      status: '-' // <- adiciona aqui!
+      status: '-' 
     };
 
     this.onSubmit.emit(dados);

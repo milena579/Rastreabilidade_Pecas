@@ -1,46 +1,135 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { Movimentacao } from '../../../core/models/movimentacao.model';
+import { Component, OnInit } from '@angular/core';
 import { MovimentacaoService } from '../../../core/services/movimentacao.service';
 import { PecaService } from '../../../core/services/peca.service';
+import { EstacaoService } from '../../../core/services/estacao.service';
 import { Peca } from '../../../core/models/peca.model';
 import { Estacao } from '../../../core/models/estacao.model';
-import { EstacaoService } from '../../../core/services/estacao.service';
+import { Movimentacao } from '../../../core/models/movimentacao.model';
+import { FormControl, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-registros-movimentacoes',
-  imports: [RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './registros-movimentacoes.component.html',
-  styleUrl: './registros-movimentacoes.component.css'
+  styleUrls: ['./registros-movimentacoes.component.css'],
+  imports: [RouterModule, FormsModule, ReactiveFormsModule],
 })
-export class RegistrosMovimentacoesComponent  implements OnInit{
-  
-  @Output() onSubmit = new EventEmitter<Movimentacao>();
+export class RegistrosMovimentacoesComponent implements OnInit {
 
   movimentacaoForm!: FormGroup;
+  pecas: Peca[] = [];
+  estacoes: Estacao[] = [];
 
-  pecas : Peca[] = [];
-  estacoes : Estacao[] = [];
+  constructor(
+    private pecaService: PecaService,
+    private estacaoService: EstacaoService,
+    private movimentacaoService: MovimentacaoService
+  ) {}
 
-  
-  constructor(private movimentacaoService: MovimentacaoService, private pecaService : PecaService, private estacaoService : EstacaoService){}
-  
   ngOnInit(): void {
-    this.pecaService.GetPecas().subscribe(retorno => {
-      this.pecas = retorno.dados;
-    })
     this.movimentacaoForm = new FormGroup({
-      pecaId: new FormControl(''),
+      pecaId: new FormControl('', Validators.required),
       origem: new FormControl({ value: '', disabled: true }),
       destino: new FormControl({ value: '', disabled: true }),
-      responsavel: new FormControl(''),
-      dataMovimentacao: new FormControl(''),
+      responsavel: new FormControl('', Validators.required),
+      dataMovimentacao: new FormControl(
+        { value: this.hoje(), disabled: true },
+        Validators.required
+      )
     });
 
+    this.movimentacaoForm.get('pecaId')!.valueChanges
+      .subscribe(pecaId => this.atualizaEstacoes(pecaId));
+
+    this.estacaoService.GetEstacao().subscribe(lista => {
+      this.estacoes = lista.dados;
+      console.log(lista.dados + "estacoes")
+
+      this.pecaService.GetPecas().subscribe(ret => {
+        this.pecas = ret.dados;
+        console.log(ret.dados + "peças")
+      });
+
+    });
   }
 
-  enviar(){
-    this.onSubmit.emit(this.movimentacaoForm.value)
+  private hoje(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  private atualizaEstacoes(pecaId: number) {
+    console.log(pecaId)
+
+    if (!pecaId) {
+      this.movimentacaoForm.patchValue({ origem: '', destino: '' });
+      return;
+    }
+
+    this.movimentacaoService.GetMovimentacoesByPecaId(pecaId).subscribe(resp => {
+      const movs = resp.dados;
+      console.log(resp.dados)
+
+      let origemName: string;
+      let destinoName: string;
+
+      console.log(movs.length)
+
+      if (movs.length == 0) {
+        origemName = '';
+        const primeira = this.estacoes.find(e => e.ordem === 1)!;
+        destinoName = primeira.nome;
+        console.log(destinoName )
+      } 
+      else {
+        const ultima = movs
+          .sort((a, b) => 
+            new Date(b.data).getTime() - new Date(a.data).getTime()
+          )[0];
+
+        origemName = ultima.destino.nome;
+        const proxima = this.estacoes
+          .find(e => e.ordem === ultima.destino.ordem + 1);
+
+        destinoName = proxima
+          ? proxima.nome
+          : '';
+      }
+      
+      this.movimentacaoForm.patchValue({
+        origem: origemName,
+        destino: destinoName
+      });
+      
+    });
+  }
+
+  enviar() {
+  if (this.movimentacaoForm.invalid) return;
+
+  const pecaId = this.movimentacaoForm.get('pecaId')!.value;
+  const responsavel = this.movimentacaoForm.get('responsavel')!.value;
+  const data = this.movimentacaoForm.get('dataMovimentacao')!.value;
+
+  const origem = this.estacoes.find(
+    e => e.nome === this.movimentacaoForm.get('origem')!.value
+  );
+
+  const destino = this.estacoes.find(
+    e => e.nome === this.movimentacaoForm.get('destino')!.value
+  );
+
+  const dto = {
+    pecaId,
+    origemId: origem?.id ?? null,
+    destinoId: destino?.id ?? 0,
+    responsavel,
+    data,
+    origem: origem?.nome,
+    destino: destino?.nome
+  };
+
+   this.movimentacaoService.InserirMovimentacao(dto).subscribe(() => {
+    this.movimentacaoForm.get('responsavel')!.reset();
+  });
   }
 }

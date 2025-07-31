@@ -39,7 +39,10 @@ namespace Rastreabilidade.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estacoes", (string)null);
+                    b.HasIndex("Ordem")
+                        .IsUnique();
+
+                    b.ToTable("Estacoes");
 
                     b.HasData(
                         new
@@ -57,7 +60,7 @@ namespace Rastreabilidade.API.Migrations
                         new
                         {
                             Id = 3,
-                            Nome = "Finalazada",
+                            Nome = "Finalizada",
                             Ordem = 3
                         });
                 });
@@ -94,7 +97,7 @@ namespace Rastreabilidade.API.Migrations
 
                     b.HasIndex("PecaId");
 
-                    b.ToTable("Movimentacoes", (string)null);
+                    b.ToTable("Movimentacoes");
                 });
 
             modelBuilder.Entity("Peca", b =>
@@ -107,7 +110,7 @@ namespace Rastreabilidade.API.Migrations
 
                     b.Property<string>("Codigo")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -115,10 +118,7 @@ namespace Rastreabilidade.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Codigo")
-                        .IsUnique();
-
-                    b.ToTable("Pecas", (string)null);
+                    b.ToTable("Pecas");
                 });
 
             modelBuilder.Entity("Movimentacao", b =>

@@ -28,9 +28,11 @@ public class MovimentacaoController : Controller
             .ToListAsync();
 
         if (!movimentacoes.Any())
-            return Ok("Nenhuma movimentação encontrada para essa peça");
+            return Ok(new { dados = new List<Movimentacao>() });
 
-        return Ok(movimentacoes);
+
+        return Ok(new { dados = movimentacoes });
+
     }
 
     [HttpGet]
@@ -40,32 +42,60 @@ public class MovimentacaoController : Controller
         {
             return NotFound();
         }
+
         var movimentacaos = await banco.Movimentacoes.ToListAsync();
         return Ok(new { dados = movimentacaos });
     }
-    
+
     [HttpPost]
-    public async Task<IActionResult> Registrar(Movimentacao movimentacao) {
-        var peca = await banco.Pecas.FirstOrDefaultAsync(p => p.Id == movimentacao.PecaId);
-        var estacoes = await banco.Estacoes.ToListAsync();
+    public async Task<IActionResult> Post([FromBody] MovimentacaoDto dto)
+    {
+        var peca = await banco.Pecas.FirstOrDefaultAsync(p => p.Id == dto.PecaId);
+        if (peca == null)
+            return NotFound("Peça não encontrada.");
 
-        var origem = estacoes.FirstOrDefault(e => e.Nome.Equals(movimentacao.Origem));
-        var destino = estacoes.FirstOrDefault(e => e.Nome.Equals(movimentacao.Destino));
+        var origem = dto.OrigemId.HasValue
+            ? await banco.Estacoes.FirstOrDefaultAsync(e => e.Id == dto.OrigemId)
+            : null;
 
-        if (destino.Ordem != origem.Ordem + 1)
-            return BadRequest("Movimentação inválida: a ordem não está correta.");
+        var destino = await banco.Estacoes.FirstOrDefaultAsync(e => e.Id == dto.DestinoId);
+        if (destino == null)
+            return NotFound("Estação de destino não encontrada.");
 
-
-        if (movimentacao.Destino.Ordem == 3)
+        if (origem == null)
         {
-            peca.Status = "Finalizada";
+            if (destino.Ordem != 1)
+                return BadRequest("Movimentação inicial só pode ir para a primeira estação.");
         }
-        
-        peca.Status = destino.Nome;
 
-        banco.Movimentacoes.Add(movimentacao);
+        else
+        {
+            if (destino.Ordem != origem.Ordem + 1)
+                return BadRequest("Movimentação inválida: é preciso seguir a ordem correta.");
+        }
+
+        if (destino.Ordem == 3)
+            peca.Status = "Finalizada";
+        else
+            peca.Status = destino.Nome;
+
+
+        var novaMovimentacao = new Movimentacao
+        {
+            PecaId = dto.PecaId,
+            OrigemId = dto.OrigemId,
+            DestinoId = dto.DestinoId,
+            Data = dto.Data,
+            Responsavel = dto.Responsavel,
+            Origem = origem,
+            Destino = destino
+
+        };
+
+        banco.Movimentacoes.Add(novaMovimentacao);
         await banco.SaveChangesAsync();
 
-        return Ok(movimentacao);
+        return Ok(novaMovimentacao);
     }
+
 }

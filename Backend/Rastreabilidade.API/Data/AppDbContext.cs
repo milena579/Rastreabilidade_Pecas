@@ -16,16 +16,16 @@ namespace Rastreabilidade.API.Data
         {
 
             modelBuilder.Entity<Estacao>()
+                .HasIndex(e => e.Ordem)
+            .   IsUnique();
+
+            modelBuilder.Entity<Estacao>()
             .HasData(
                 new Estacao { Id = 1, Nome = "Recebimento", Ordem = 1 },
                 new Estacao { Id = 2, Nome = "Montagem", Ordem = 2 },
                 new Estacao { Id = 3, Nome = "Finalizada", Ordem = 3 }
             );
-
-            modelBuilder.Entity<Estacao>()
-                .HasIndex(e => e.Ordem)
-            .   IsUnique();
-
+            
             modelBuilder.Entity<Movimentacao>()
                 .HasOne(m => m.Peca)
                 .WithMany(p => p.Movimentacoes)

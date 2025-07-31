@@ -26,22 +26,21 @@ export class MovimentacoesComponent implements OnInit{
 
   ngOnInit(): void {
     this.moviService.GetMovimentacoes().subscribe(retorno => {
-      console.log(retorno.dados)
       this.movimentacoes = retorno.dados;
       this.movimentacoesGeral = retorno.dados;
     })
   }
 
   searchMoviPeca(event: Event) {
-  const target = event.target as HTMLInputElement;
-  const value = target.value.toLowerCase();
+    const target = event.target as HTMLInputElement;
+    const value = target.value.toLowerCase();
 
-  this.movimentacoes = this.movimentacoesGeral.filter(mov => {
-    const peca = this.pecas.find(p => p.id === mov.pecaId);
-    const nomePeca = peca ? peca.codigo.toLowerCase() : '';
+    this.movimentacoes = this.movimentacoesGeral.filter(mov => {
+      const peca = this.pecas.find(p => p.id === mov.pecaId);
+      const nomePeca = peca ? peca.codigo.toLowerCase() : '';
 
-    return nomePeca.includes(value);
-  });
+      return nomePeca.includes(value);
+    });
 }
 
 
