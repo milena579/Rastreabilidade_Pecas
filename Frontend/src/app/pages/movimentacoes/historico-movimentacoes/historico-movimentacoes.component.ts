@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MovimentacaoService } from '../../../core/services/movimentacao.service';
 import { Movimentacao } from '../../../core/models/movimentacao.model';
+import { Peca } from '../../../core/models/peca.model';
+import { MovimentacaoDto } from '../../../core/models/movimentacaoDto.model';
 
 @Component({
   selector: 'app-historico-movimentacoes',
@@ -11,14 +13,24 @@ import { Movimentacao } from '../../../core/models/movimentacao.model';
 })
 export class HistoricoMovimentacoesComponent implements OnInit {
   
-  movimentacoes : Movimentacao[] = []
+  movimentacoes : any[] = []
+  pecas : Peca[] = [];
+  pecasGeral : Peca[] = [];
 
   constructor(private movimentacaoService: MovimentacaoService){}
   
   ngOnInit(): void {
     this.movimentacaoService.GetMovimentacoes().subscribe(retorno =>{
-      this
+      this.movimentacoes = retorno.dados;
     })
   }
 
+  searchPeca(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    this.movimentacaoService.BuscarPorPeca(value).subscribe(retorno => {
+      this.movimentacoes = retorno.dados;
+    });
+  }
 }

@@ -20,7 +20,15 @@
     </div>
     <div class="secao">
         <label for="">Responsavel</label>
-        <input type="text" formControlName = "responsavel">
+        <input type="text" formControlName = "responsavel" required
+        [class.invalido]="formDir.form.controls['responsavel']?.invalid && formDir.form.controls['responsavel']?.touched"
+        >
+
+        @if (formDir.form.controls['responsavel']?.invalid && formDir.form.controls['responsavel']?.touched) {
+        <div class="erro">
+            Este campo é obrigatório.
+        </div>
+        }
     </div>
     <div class="secao">
         <label for="">Data Movimentação</label>

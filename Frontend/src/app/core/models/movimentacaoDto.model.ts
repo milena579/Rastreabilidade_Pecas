@@ -1,6 +1,6 @@
 export interface MovimentacaoDto {
   pecaId: number;
-  origemId: number | null; // pode ser null se for a primeira estação
+  origemId: number | null; 
   destinoId: number;
   responsavel: string;
   data: string;

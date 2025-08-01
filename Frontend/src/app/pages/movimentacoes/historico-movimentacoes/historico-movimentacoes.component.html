@@ -1,7 +1,7 @@
 <div class="tela">
   <div class="acoes">
     <div class="barraPesquisa">
-      <input type="text" name="pesquisaPeca" placeholder="Buscar por peça..." />
+      <input type="text" name="pesquisaPeca" (input)="searchPeca($event)" placeholder="Buscar por peça..." />
       <img src="assets/lupa-arredondada.png" alt="lupa-arredondada" class="lupa"/>
     </div>
   </div>
@@ -18,24 +18,21 @@
         </tr>
       </thead>
       <tbody>
-        <!-- @if(pecas.length > 0){
-          @for (peca of pecas; track $index) {
+        @if(movimentacoes.length > 0 && movimentacoes){
+          @for (movimento of movimentacoes; track $index) {
             <tr>
-              <td>{{peca.id }}</td>
-              <td >
-                {{peca.codigo }}
-              </td>
-              <td>{{peca.status }}</td>
-              <td class="secaoDelete">
-                <button (click)="excluirPeca(peca.id)">🗑️</button>
-              </td>
+              <td>{{ movimento.peca?.codigo }}</td>
+              <td>{{ movimento.origem?.nome }}</td>
+              <td>{{ movimento.destino?.nome }}</td>
+              <td>{{movimento.responsavel }}</td>
+              <td>{{movimento.data }}</td>
             </tr>
           }
         } @else {
           <tr>
-            <td colspan="4">Nenhuma peça cadastrada!</td>
+            <td colspan="4">Nenhuma movimentacao!</td>
           </tr>
-        } -->
+        }
       </tbody>
     </table>
   </div>
