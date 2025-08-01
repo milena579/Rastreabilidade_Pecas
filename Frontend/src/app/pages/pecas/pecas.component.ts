@@ -20,11 +20,9 @@ export class PecasComponent implements OnInit{
 
   ngOnInit(): void {
     this.pecaService.GetPecas().subscribe(retorno => {
-      console.log(retorno.dados);
       this.pecas = retorno.dados;
       this.pecasGeral = retorno.dados;
 
-      console.log(retorno.dados)
     });
   }
 

@@ -61,18 +61,15 @@ export class RegistrosMovimentacoesComponent implements OnInit {
 
     this.movimentacaoService.GetMovimentacoesByPecaId(pecaId).subscribe(resp => {
       const movs = resp.dados;
-      console.log(resp.dados)
 
       let origemName: string;
       let destinoName: string;
 
-      console.log(movs.length)
 
       if (movs.length == 0) {
         origemName = '';
         const primeira = this.estacoes.find(e => e.ordem === 1)!;
         destinoName = primeira.nome;
-        console.log(destinoName )
       } 
       else {
         const ultima = movs
@@ -81,7 +78,6 @@ export class RegistrosMovimentacoesComponent implements OnInit {
           )[0];
 
         origemName = ultima.destino.nome ?? '';
-        console.log(origemName)
         const proxima = this.estacoes
           .find(e => e.ordem === ultima.destino.ordem + 1);
 
@@ -89,7 +85,6 @@ export class RegistrosMovimentacoesComponent implements OnInit {
           ? proxima.nome
           : '';
 
-        console.log(destinoName)
       }
       
       this.movimentacaoForm.patchValue({
@@ -111,7 +106,6 @@ export class RegistrosMovimentacoesComponent implements OnInit {
       e => e.nome === this.movimentacaoForm.get('origem')!.getRawValue()
       
     );
-    console.log(origem + "skdhsaj")
 
     const destino = this.estacoes.find(
       e => e.nome === this.movimentacaoForm.get('destino')!.getRawValue()
@@ -125,11 +119,9 @@ export class RegistrosMovimentacoesComponent implements OnInit {
       data
     };
     
-    console.log(this.movimentacaoForm.value + "testeeee")
 
     this.movimentacaoService.InserirMovimentacao(dto).subscribe({
       next: () => {
-        console.log('Movimentação enviada com sucesso!');
         this.movimentacaoForm.get('responsavel')!.reset();
       },
       error: err => {
